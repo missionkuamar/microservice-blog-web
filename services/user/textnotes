@@ -1,0 +1,15 @@
+npm init -y
+
+npm install typescript --save-dev
+
+npx tsc --init
+
+npm install -g typescript
+
+npm i express dotenv mongoose
+
+npm i -d typescript @type/express @types/mongoose @types/dotenv
+
+npm i concurrently
+
+npm run build  //for building purpose

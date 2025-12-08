@@ -1,0 +1,12 @@
+npm init -y
+npm i  express dotenv  multer datauri cloudinary @neondatabase/serverless
+
+ npm i @types/express @types/multer @types/dotenv typescript 
+ npm  i concurrently
+
+ npx tsc -init // tsconfig.json file aye ga
+
+ npm run build  taki dist folder mele
+
+phir 
+npm run dev se server run hoga

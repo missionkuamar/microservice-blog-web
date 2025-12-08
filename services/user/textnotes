@@ -13,3 +13,13 @@ npm i -d typescript @type/express @types/mongoose @types/dotenv
 npm i concurrently
 
 npm run build  //for building purpose
+
+ npm install -g ts-node typescript
+
+for running the terminal npm start || npm run dev
+
+npm i jsonwebtoken @types/jsonwebtoken
+
+npm i cloudinary
+npm i datauri
+npm install multer

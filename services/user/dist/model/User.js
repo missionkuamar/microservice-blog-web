@@ -1,24 +1,13 @@
 import mongoose from "mongoose";
 const schema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-    },
-    email: {
-        type: String,
-        unique: true,
-        required: true,
-    },
-    image: {
-        type: String,
-        required: true,
-    },
+    name: { type: String, required: true },
+    email: { type: String, unique: true, required: true },
+    image: { type: String, required: true },
     instagram: String,
     facebook: String,
     linkedin: String,
     bio: String,
-}, {
-    timestamps: true,
-});
+}, { timestamps: true });
 const User = mongoose.model("User", schema);
+export default User;
 //# sourceMappingURL=User.js.map

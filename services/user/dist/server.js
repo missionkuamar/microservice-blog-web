@@ -1,18 +1,27 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import connectDb from './utils/db.js';
-import userRouter from './routes/user.js';
+import express from "express";
+import dotenv from "dotenv";
+import connectDb from "./utils/db.js";
+import userRouter from "./routes/user.js";
+import { v2 as cloudinary } from "cloudinary";
 dotenv.config();
-const app = express();
-const port = process.env.PORT || 3000;
-// api routes
-app.use('/api/v1', userRouter);
-app.get('/', (req, res) => {
-    res.send('Hello World!');
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
 });
-// connect to database
+export default cloudinary;
+const app = express();
+app.use(express.json());
+const port = process.env.PORT || 3000;
+// routes
+app.use("/api/v1", userRouter);
+// test route
+app.get("/", (req, res) => {
+    res.send("Hello World");
+});
+// connect db
 connectDb();
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
+    console.log(`Server running on port ${port}`);
 });
 //# sourceMappingURL=server.js.map

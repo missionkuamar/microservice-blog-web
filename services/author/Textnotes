@@ -10,3 +10,5 @@ npm i  express dotenv  multer datauri cloudinary @neondatabase/serverless
 
 phir 
 npm run dev se server run hoga
+
+npm i jsonwebtoken @types/jsonwebtoken

@@ -1,0 +1,9 @@
+npm init -y 
+
+npm i express  express dotenv jsonwebtoken @types/express @types/dotenv @types/jsonwebtoken typescript
+
+npm run build   from typescript
+ npm i concunnently
+ npm i axios
+
+ npm i redis

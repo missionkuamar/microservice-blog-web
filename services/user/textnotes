@@ -23,3 +23,5 @@ npm i jsonwebtoken @types/jsonwebtoken
 npm i cloudinary
 npm i datauri
 npm install multer
+ npm i cors 
+ npm i @types/cors

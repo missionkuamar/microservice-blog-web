@@ -1,9 +1,20 @@
 import axios from "axios";
 import TryCatch from "../utils/TryCatch.js";
 import { sql } from "../utils/db.js";
+import { redisClient } from "../server.js";
 
 export const getAllBlogs = TryCatch(async (req, res) => {
   const { searchQuery, category } = req.query;
+
+
+  const cacheKey = `blogs:${searchQuery}:${category}`;
+  const cached = await redisClient.get(cacheKey);
+
+  if(cached) {
+    console.log("Serving from redis cache ");
+    res.json(JSON.parse(cached));
+    return;
+  }
 
   let blogs;
 
@@ -44,7 +55,7 @@ export const getAllBlogs = TryCatch(async (req, res) => {
       ORDER BY created_at DESC
     `;
   }
-
+ await redisClient.set(cacheKey, JSON.stringify(blogs), {EX: 3600})
   res.json(blogs);
 });
 
@@ -53,7 +64,15 @@ export const getSingleBlog = TryCatch(async (req, res) => {
   const blog = await sql`
     SELECT * FROM blogs WHERE id = ${req.params.id}
   `;
+const blogid = req.params.id
+const cacheKey = `blog:${blogid}`
+const  cached = await redisClient.get(cacheKey);
 
+ if(cached) {
+    console.log("Serving from redis cache ");
+    res.json(JSON.parse(cached));
+    return;
+  }
   // 1️⃣ blog not found → return early
   if (!blog.length) {
     return res.status(404).json({
@@ -66,10 +85,12 @@ console.log("USER_SERVICE =", process.env.USER_SERVICE);
   const { data } = await axios.get(
     `${process.env.USER_SERVICE}/api/v1/user/${blog[0].author}`
   );
-
-  // 3️⃣ respond cleanly
-  res.json({
+  const responseData = {
     blog: blog[0],
     author: data,
-  });
+  }
+
+  await redisClient.set(cacheKey, JSON.stringify(responseData), {EX: 3600})
+  // 3️⃣ respond cleanly
+  res.json(responseData);
 });
